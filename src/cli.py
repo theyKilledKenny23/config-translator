@@ -19,8 +19,12 @@ def main():
     )
     args = parser.parse_args()
 
-    with open(args.input, encoding="utf-8") as f:
-        source = f.read()
+    try:
+        with open(args.input, encoding="utf-8") as f:
+            source = f.read()
+    except FileNotFoundError:
+        print(f"Ошибка: файл не найден: {args.input}", file=sys.stderr)
+        sys.exit(1)
 
     try:
         ast = parse(source)
