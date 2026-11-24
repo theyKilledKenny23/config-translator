@@ -120,3 +120,33 @@ def test_cli_with_invalid_file():
     )
     assert result.returncode != 0
     assert "Ошибка" in result.stderr
+
+def test_example_render():
+    """Пример: настройки рендера."""
+    source = Path("examples/render.cfg").read_text(encoding="utf-8")
+    result = _run_pipeline(source)
+    assert "width: 1920.0" in result
+    assert "height: 1080.0" in result
+    assert "- 1920.0" in result
+    assert "- 1080.0" in result
+    assert "- 60.0" in result
+
+
+def test_example_physics():
+    """Пример: физическая симуляция."""
+    source = Path("examples/physics.cfg").read_text(encoding="utf-8")
+    result = _run_pipeline(source)
+    assert "gravity: 9.81" in result
+    assert "- 9.81" in result
+    assert "- 0.016" in result
+    assert "- 0.25" in result
+
+
+def test_example_server():
+    """Пример: конфигурация веб-сервера."""
+    source = Path("examples/server.cfg").read_text(encoding="utf-8")
+    result = _run_pipeline(source)
+    assert "port: 8080.0" in result
+    assert "- 8080.0" in result
+    assert "- 30.0" in result
+    assert "- 100.0" in result
